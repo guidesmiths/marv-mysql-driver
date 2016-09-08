@@ -5,7 +5,7 @@ services:
 
 before_install:
   - docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql
-  - while ! echo exit | nc localhost 3306; do sleep 1; done
+  - sleep 10
 
 language: node_js
 
