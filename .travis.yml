@@ -3,8 +3,11 @@ sudo: required
 services:
   - docker
 
-before_install:
+before_script:
   - sudo /etc/init.d/mysql stop
+  - sudo /etc/init.d/postgresql stop
+
+before_install:
   - docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql
 
 language: node_js
