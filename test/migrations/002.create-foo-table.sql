@@ -1,0 +1,7 @@
+START TRANSACTION;
+CREATE TABLE bar (
+    id INTEGER PRIMARY KEY,
+    value TEXT NOT NULL
+);
+INSERT INTO bar (id, value)  VALUES (1, 'bar');
+COMMIT;

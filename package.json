@@ -1,0 +1,47 @@
+{
+  "name": "marv-mysql-driver",
+  "version": "0.0.0",
+  "description": "A mysql marv driver implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/suite.js",
+    "lint": "eslint .",
+    "prepush": "npm run lint && npm test",
+    "docker": "docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql"
+  },
+  "author": "GuideSmiths Ltd",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^0.23.0",
+    "eslint-config-imperative": "0.0.6",
+    "eslint-plugin-imperative": "0.0.2",
+    "hath": "^1.0.0",
+    "husky": "^0.11.4",
+    "marv": "^0.4.0",
+    "marv-compliance-tests": "^0.3.0"
+  },
+  "dependencies": {
+    "async": "^2.0.1",
+    "debug": "^2.2.0",
+    "lodash": "^4.15.0",
+    "mysql": "^2.11.1"
+  },
+  "keywords": [
+    "marv",
+    "database",
+    "migration",
+    "migrate",
+    "mysql"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guidesmiths/marv-mysql-driver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/guidesmiths/marv-mysql-driver/issues"
+  },
+  "homepage": "https://github.com/guidesmiths/marv-mysql-driver#readme"
+}

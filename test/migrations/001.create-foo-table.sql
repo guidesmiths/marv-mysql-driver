@@ -1,0 +1,7 @@
+START TRANSACTION;
+CREATE TABLE foo (
+    id INTEGER PRIMARY KEY,
+    value TEXT NOT NULL
+);
+INSERT INTO foo (id, value) VALUES (1, 'foo');
+COMMIT;
