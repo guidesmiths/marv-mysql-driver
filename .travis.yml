@@ -1,3 +1,8 @@
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install language-pack-es
+  - sudo /etc/init.d/mysql stop
+  - sudo /etc/init.d/mysql start 5.7
 
 services:
   - mysql
