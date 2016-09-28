@@ -69,7 +69,8 @@ module.exports = function(_config) {
         debug('Run migration %s: %s\n%s', migration.level, migration.comment, migration.script)
         userClient.query(migration.script, function(err) {
             if (err) return cb(err)
-            migrationClient.query(SQL.insertMigration, [ migration.level, migration.comment, migration.timestamp, migration.checksum ], guard(cb))
+            if (migration.audit !== false) return migrationClient.query(SQL.insertMigration, [ migration.level, migration.comment, migration.timestamp, migration.checksum ], guard(cb))
+            cb()
         })
     }
 
