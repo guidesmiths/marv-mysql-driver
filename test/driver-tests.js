@@ -2,6 +2,7 @@ var Hath = require('hath')
 var marv = require('marv')
 var path = require('path')
 var mysql = require('mysql')
+require('hath-assert')(Hath)
 
 function shouldRunMigration(t, done) {
     const client = mysql.createConnection(t.locals.config.connection)
@@ -15,15 +16,15 @@ function shouldRunMigration(t, done) {
                     if (err) throw err
                     client.query('SELECT * FROM foo', function(err, result) {
                         if (err) throw err
-                        t.assert(result.length === 1, 'Row not inserted')
-                        t.assert(result[0].id === 1, 'Wrong id')
-                        t.assert(result[0].value === 'foo', 'Wrong value')
+                        t.assertEquals(result.length, 1)
+                        t.assertEquals(result[0].id, 1)
+                        t.assertEquals(result[0].value, 'foo')
 
                         client.query('SELECT * FROM bar', function(err, result) {
                             if (err) throw err
-                            t.assert(result.length === 1, 'Row not inserted')
-                            t.assert(result[0].id === 1, 'Wrong id')
-                            t.assert(result[0].value === 'bar', 'Wrong value')
+                            t.assertEquals(result.length, 1)
+                            t.assertEquals(result[0].id, 1)
+                            t.assertEquals(result[0].value, 'bar')
                             client.end()
                             done()
                         })
