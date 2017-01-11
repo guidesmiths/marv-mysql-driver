@@ -19,8 +19,8 @@
     "hath-assert": "^0.2.0",
     "hath-report-spec": "^0.1.0",
     "husky": "^0.11.4",
-    "marv": "^0.6.2",
-    "marv-compliance-tests": "^0.4.0"
+    "marv": "^1.2.3",
+    "marv-compliance-tests": "^1.0.0"
   },
   "dependencies": {
     "async": "^2.0.1",
