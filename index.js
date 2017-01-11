@@ -4,6 +4,8 @@ var _ = require('lodash')
 var async = require('async')
 var format = require('util').format
 var debug = require('debug')('marv:mysql-driver')
+var XRegExp = require('xregexp')
+var directivePattern = XRegExp('^-- @MARV\\s+(?<key>\\w+)\\s*=\\s*(?<value>\\S+)', 'mig')
 
 module.exports = function(options) {
 
@@ -65,19 +67,39 @@ module.exports = function(options) {
         })
     }
 
-    function runMigration(migration, cb) {
+    function runMigration(_migration, cb) {
+        var migration = _.merge({}, _migration, { directives: parseDirectives(_migration.script) })
+
+        if (migration.directives.skip) {
+            debug('Skipping migration %s: %s\n%s', migration.level, migration.comment, migration.script)
+            return cb()
+        }
+
         debug('Run migration %s: %s\n%s', migration.level, migration.comment, migration.script)
         userClient.query(migration.script, function(err) {
             if (err) return cb(err)
             if (auditable(migration)) {
-                return migrationClient.query(SQL.insertMigration, [ migration.level, migration.comment, migration.timestamp, migration.checksum ], guard(cb))
+                return migrationClient.query(SQL.insertMigration, [
+                    migration.level,
+                    migration.directives.comment || migration.comment,
+                    migration.timestamp,
+                    migration.checksum
+                ], guard(cb))
             }
             cb()
         })
     }
 
+    function parseDirectives(script) {
+        var directives = {}
+        XRegExp.forEach(script, directivePattern, function(match) {
+            directives[match[1].toLowerCase()] = match[2]
+        })
+        return directives
+    }
+
     function auditable(migration) {
-        if (migration.hasOwnProperty('directives')) return migration.directives.audit !== false
+        if (migration.hasOwnProperty('directives')) return !/false/i.test(migration.directives.audit)
         if (migration.hasOwnProperty('audit')) {
             if (!config.quiet) console.warn("The 'audit' option is deprecated. Please use 'directives.audit' instead. You can disable this warning by setting 'quiet' to true.")
             return migration.audit !== false

@@ -21,12 +21,47 @@ function setup(t, done) {
     t.locals.config = config
     t.locals.driver = driver(config)
     t.locals.driver2 = driver(config)
-    t.locals.migration = {
-        level: 1,
-        comment: 'test migration',
-        script: 'SELECT 1',
-        timestamp: new Date(),
-        checksum: '401f1b790bf394cf6493425c1d7e33b0'
+    t.locals.migrations = {
+        simple: {
+            level: 1,
+            comment: 'test migration',
+            script: 'SELECT 1',
+            timestamp: new Date(),
+            checksum: '401f1b790bf394cf6493425c1d7e33b0'
+        },
+        comment: {
+            level: 2,
+            comment: 'do not use',
+            script: [
+                '-- @MARV foo = bar\n',
+                '-- @MARV COMMENT = override\n',
+                'SELECT 1'
+            ].join('\n'),
+            timestamp: new Date(),
+            checksum: '401f1b790bf394cf6493425c1d7e33b0'
+        },
+        audit: {
+            level: 3,
+            comment: 'test migration',
+            script: [
+                '-- @MARV foo = bar\n',
+                '-- @MARV AUDIT   = false\n',
+                'SELECT 1'
+            ].join('\n'),
+            timestamp: new Date(),
+            checksum: '401f1b790bf394cf6493425c1d7e33b0'
+        },
+        skip: {
+            level: 4,
+            comment: 'test migration',
+            script: [
+                '-- @MARV foo = bar\n',
+                '-- @MARV SKIP   = true\n',
+                'INVALID'
+            ].join('\n'),
+            timestamp: new Date(),
+            checksum: '401f1b790bf394cf6493425c1d7e33b0'
+        }
     }
     var connection = mysql.createConnection({ user: 'root' })
     connection.connect(function(err) {
