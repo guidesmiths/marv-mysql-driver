@@ -70,7 +70,7 @@ module.exports = function(options) {
     function runMigration(_migration, cb) {
         var migration = _.merge({}, _migration, { directives: parseDirectives(_migration.script) })
 
-        if (migration.directives.skip) {
+        if (/^true$/i.test(migration.directives.skip)) {
             debug('Skipping migration %s: %s\n%s', migration.level, migration.comment, migration.script)
             return cb()
         }
@@ -99,7 +99,7 @@ module.exports = function(options) {
     }
 
     function auditable(migration) {
-        if (migration.hasOwnProperty('directives')) return !/false/i.test(migration.directives.audit)
+        if (migration.hasOwnProperty('directives')) return !/^false$/i.test(migration.directives.audit)
         if (migration.hasOwnProperty('audit')) {
             if (!config.quiet) console.warn("The 'audit' option is deprecated. Please use 'directives.audit' instead. You can disable this warning by setting 'quiet' to true.")
             return migration.audit !== false
