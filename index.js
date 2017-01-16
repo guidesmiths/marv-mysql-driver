@@ -5,7 +5,7 @@ var async = require('async')
 var format = require('util').format
 var debug = require('debug')('marv:mysql-driver')
 var XRegExp = require('xregexp')
-var directivePattern = XRegExp('^-- @MARV\\s+(?<key>\\w+)\\s*=\\s*(?<value>\\S+)', 'mig')
+var directivePattern = XRegExp('^--\\s*@MARV\\s+(?<key>\\w+)\\s*=\\s*(?<value>\\S+)', 'mig')
 
 module.exports = function(options) {
 
