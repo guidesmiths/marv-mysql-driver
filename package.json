@@ -1,6 +1,6 @@
 {
   "name": "marv-mysql-driver",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A mysql marv driver implementation",
   "main": "index.js",
   "scripts": {
