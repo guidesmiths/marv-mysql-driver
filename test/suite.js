@@ -9,6 +9,7 @@ require('hath-assert')(Hath)
 function setup(t, done) {
     var config = {
         table: 'mysql_migrations',
+        quiet: true,
         connection: {
             host: 'localhost',
             port: 3306,
@@ -63,6 +64,7 @@ function setup(t, done) {
             checksum: '401f1b790bf394cf6493425c1d7e33b0'
         }
     }
+    t.locals.migration = t.locals.migrations.simple
     var connection = mysql.createConnection({ user: 'root' })
     connection.connect(function(err) {
         if (err) throw err

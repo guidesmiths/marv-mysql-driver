@@ -19,15 +19,14 @@
     "hath-assert": "^0.2.0",
     "hath-report-spec": "^0.1.0",
     "husky": "^0.11.4",
-    "marv": "^1.2.3",
     "marv-compliance-tests": "^1.0.0"
   },
   "dependencies": {
     "async": "^2.0.1",
     "debug": "^2.2.0",
     "lodash": "^4.15.0",
-    "mysql": "^2.11.1",
-    "xregexp": "^3.1.1"
+    "marv": "^1.4.0",
+    "mysql": "^2.11.1"
   },
   "keywords": [
     "marv",

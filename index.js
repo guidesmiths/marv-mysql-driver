@@ -4,12 +4,14 @@ var _ = require('lodash')
 var async = require('async')
 var format = require('util').format
 var debug = require('debug')('marv:mysql-driver')
-var XRegExp = require('xregexp')
-var directivePattern = XRegExp('^--\\s*@MARV\\s+(?<key>\\w+)\\s*=\\s*(?<value>\\S+)', 'mig')
+var marv = require('marv')
+var supportedDirectives = ['audit', 'comment', 'skip']
+var pkg = require('./package.json')
 
 module.exports = function(options) {
 
-    var config = _.merge({ table: 'migrations', connection: {} }, options)
+    var config = _.merge({ table: 'migrations', connection: {} }, _.omit(options, 'logger'))
+    var logger = options.logger || console
     var SQL = {
         ensureMigrationsTables: load('ensure-migrations-tables.sql'),
         retrieveMigrations: load('retrieve-migrations.sql'),
@@ -68,7 +70,9 @@ module.exports = function(options) {
     }
 
     function runMigration(_migration, cb) {
-        var migration = _.merge({}, _migration, { directives: parseDirectives(_migration.script) })
+        var migration = _.merge({}, _migration, { directives: marv.parseDirectives(_migration.script) })
+
+        checkDirectives(migration.directives)
 
         if (/^true$/i.test(migration.directives.skip)) {
             debug('Skipping migration %s: %s\n%s', migration.level, migration.comment, migration.script)
@@ -90,18 +94,18 @@ module.exports = function(options) {
         })
     }
 
-    function parseDirectives(script) {
-        var directives = {}
-        XRegExp.forEach(script, directivePattern, function(match) {
-            directives[match[1].toLowerCase()] = match[2]
-        })
-        return directives
+    function checkDirectives(directives) {
+        var unsupportedDirectives = _.chain(directives).keys().difference(supportedDirectives).value()
+        if (unsupportedDirectives.length === 0) return
+        if (!config.quiet) {
+            logger.warn('Ignoring unsupported directives: %s. Try upgrading %s.', unsupportedDirectives, pkg.name)
+        }
     }
 
     function auditable(migration) {
         if (migration.hasOwnProperty('directives')) return !/^false$/i.test(migration.directives.audit)
         if (migration.hasOwnProperty('audit')) {
-            if (!config.quiet) console.warn("The 'audit' option is deprecated. Please use 'directives.audit' instead. You can disable this warning by setting 'quiet' to true.")
+            if (!config.quiet) logger.warn("The 'audit' option is deprecated. Please use 'directives.audit' instead.")
             return migration.audit !== false
         }
         return true
