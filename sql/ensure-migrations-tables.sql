@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS migrations (
     level INTEGER PRIMARY KEY,
     comment TEXT,
-    `timestamp` DATETIME(3),
+    `timestamp` DATETIME,
     checksum TEXT
 );
 
