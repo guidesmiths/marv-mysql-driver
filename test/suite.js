@@ -27,7 +27,7 @@ function setup(t, done) {
             level: 1,
             comment: 'test migration',
             script: 'SELECT 1',
-            timestamp: new Date(),
+            timestamp: new Date('2016-12-01T15:14:13.000Z'),
             checksum: '401f1b790bf394cf6493425c1d7e33b0'
         },
         comment: {
@@ -38,7 +38,7 @@ function setup(t, done) {
                 '-- @MARV COMMENT = override\n',
                 'SELECT 1'
             ].join('\n'),
-            timestamp: new Date(),
+            timestamp: new Date('2016-12-01T15:14:13.000Z'),
             checksum: '401f1b790bf394cf6493425c1d7e33b0'
         },
         audit: {
@@ -49,7 +49,7 @@ function setup(t, done) {
                 '-- @MARV AUDIT   = false\n',
                 'SELECT 1'
             ].join('\n'),
-            timestamp: new Date(),
+            timestamp: new Date('2016-12-01T15:14:13.000Z'),
             checksum: '401f1b790bf394cf6493425c1d7e33b0'
         },
         skip: {
@@ -60,7 +60,7 @@ function setup(t, done) {
                 '-- @MARV SKIP   = true\n',
                 'INVALID'
             ].join('\n'),
-            timestamp: new Date(),
+            timestamp: new Date('2016-12-01T15:14:13.000Z'),
             checksum: '401f1b790bf394cf6493425c1d7e33b0'
         }
     }
