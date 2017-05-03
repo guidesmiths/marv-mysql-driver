@@ -26,6 +26,7 @@
     "debug": "^2.2.0",
     "lodash": "^4.15.0",
     "marv": "^1.4.2",
+    "marv-compliance-tests": "^1.1.0",
     "mysql": "^2.11.1"
   },
   "keywords": [

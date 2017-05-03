@@ -81,14 +81,17 @@ module.exports = function(options) {
 
         debug('Run migration %s: %s\n%s', migration.level, migration.comment, migration.script)
         userClient.query(migration.script, function(err) {
-            if (err) return cb(err)
+            if (err) return cb(decorate(err, migration))
             if (auditable(migration)) {
                 return migrationClient.query(SQL.insertMigration, [
                     migration.level,
                     migration.directives.comment || migration.comment,
                     migration.timestamp,
                     migration.checksum
-                ], guard(cb))
+                ], function(err) {
+                    if (err) return cb(decorate(err, migration))
+                    cb()
+                })
             }
             cb()
         })
@@ -117,6 +120,10 @@ module.exports = function(options) {
 
     function load(filename) {
         return fs.readFileSync(path.join(__dirname, 'sql', filename), 'utf-8').replace(/migrations/g, config.table)
+    }
+
+    function decorate(err, migration) {
+        return _.merge(err, { migration: migration })
     }
 
     function guard(cb) {

@@ -62,6 +62,13 @@ function setup(t, done) {
             ].join('\n'),
             timestamp: new Date('2016-12-01T15:14:13.000Z'),
             checksum: '401f1b790bf394cf6493425c1d7e33b0'
+        },
+        fail: {
+            level: 5,
+            comment: 'failing migration',
+            script: 'INVALID',
+            timestamp: new Date('2016-12-01T15:14:13.000Z'),
+            checksum: '401f1b790bf394cf6493425c1d7e33b0'
         }
     }
     t.locals.migration = t.locals.migrations.simple
