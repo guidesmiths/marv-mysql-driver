@@ -33,6 +33,10 @@ marv.scan(directory, (err, migrations) => {
 })
 ```
 
-
-
+## Testing
+```bash
+npm install # or yarn
+npm run docker
+npm test
+```
 
