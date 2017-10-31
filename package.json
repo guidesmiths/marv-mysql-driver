@@ -1,6 +1,6 @@
 {
   "name": "marv-mysql-driver",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "A mysql marv driver implementation",
   "main": "index.js",
   "scripts": {
@@ -19,14 +19,14 @@
     "hath-assert": "^0.2.0",
     "hath-report-spec": "^0.1.0",
     "husky": "^0.11.4",
-    "marv-compliance-tests": "^1.1.0"
+    "marv-compliance-tests": "^2.0.0"
   },
   "dependencies": {
-    "async": "^2.0.1",
-    "debug": "^2.2.0",
-    "lodash": "^4.15.0",
-    "marv": "^1.5.0",
-    "mysql": "^2.11.1"
+    "async": "^2.5.0",
+    "debug": "^3.1.0",
+    "lodash": "^4.17.4",
+    "marv": "^2.0.0",
+    "mysql": "^2.15.0"
   },
   "keywords": [
     "marv",

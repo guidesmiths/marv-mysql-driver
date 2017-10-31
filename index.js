@@ -14,6 +14,8 @@ module.exports = function(options) {
     var logger = options.logger || console
     var SQL = {
         ensureMigrationsTables: load('ensure-migrations-tables.sql'),
+        checkNamespaceColumn: load('check-namespace-column.sql'),
+        addNamespaceColumn: load('add-namespace-column.sql'),
         retrieveMigrations: load('retrieve-migrations.sql'),
         dropMigrationsTables: load('drop-migrations-tables.sql'),
         lockMigrationsLockTable: load('lock-migrations-lock-table.sql'),
@@ -51,7 +53,19 @@ module.exports = function(options) {
     }
 
     function ensureMigrations(cb) {
-        migrationClient.query(SQL.ensureMigrationsTables, guard(cb))
+        async.series([
+            migrationClient.query.bind(migrationClient, SQL.ensureMigrationsTables),
+            migrationClient.query.bind(migrationClient, SQL.checkNamespaceColumn)
+        ], ensureNamespace)
+
+        function ensureNamespace(err, results) {
+            if (err) return cb(err)
+            if (_.chain(results).last().first().value().length === 0) {
+                migrationClient.query(SQL.addNamespaceColumn, guard(cb))
+            } else {
+                cb()
+            }
+        }
     }
 
     function lockMigrations(cb) {
@@ -87,7 +101,8 @@ module.exports = function(options) {
                     migration.level,
                     migration.directives.comment || migration.comment,
                     migration.timestamp,
-                    migration.checksum
+                    migration.checksum,
+                    migration.namespace || 'default'
                 ], function(err) {
                     if (err) return cb(decorate(err, migration))
                     cb()
