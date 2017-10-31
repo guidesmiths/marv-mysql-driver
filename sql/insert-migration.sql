@@ -1,1 +1,1 @@
-INSERT INTO migrations (level, comment, `timestamp`, checksum) VALUES (?, ?, ?, ?);
+INSERT INTO migrations (level, comment, `timestamp`, checksum, namespace) VALUES (?, ?, ?, ?, ?);

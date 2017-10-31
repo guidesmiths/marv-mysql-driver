@@ -1,1 +1,1 @@
-SELECT level, comment, `timestamp`, checksum FROM migrations ORDER BY level DESC;
+SELECT level, comment, `timestamp`, checksum, namespace FROM migrations ORDER BY namespace, level DESC;
