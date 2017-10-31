@@ -22,11 +22,11 @@
     "marv-compliance-tests": "^2.0.0"
   },
   "dependencies": {
-    "async": "^2.0.1",
-    "debug": "^2.2.0",
-    "lodash": "^4.15.0",
+    "async": "^2.5.0",
+    "debug": "^3.1.0",
+    "lodash": "^4.17.4",
     "marv": "^2.0.0",
-    "mysql": "^2.11.1"
+    "mysql": "^2.15.0"
   },
   "keywords": [
     "marv",
