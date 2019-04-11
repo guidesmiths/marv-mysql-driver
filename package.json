@@ -7,7 +7,7 @@
     "test": "node test/suite.js",
     "lint": "eslint .",
     "prepush": "npm run lint && npm test",
-    "docker": "docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql"
+    "docker": "docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql:8"
   },
   "author": "GuideSmiths Ltd",
   "license": "ISC",

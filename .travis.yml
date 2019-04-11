@@ -5,7 +5,7 @@ services:
 
 before_install:
   - sudo service mysql stop
-  - docker pull mysql:latest
+  - docker pull mysql:8
   - docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql
   - sleep 10
 
