@@ -57,7 +57,7 @@ function shouldEnsureNamespaceColumn(t, done) {
                     client.query(checkNamespace, function (err, result) {
                         if (err) throw err
                         t.assertEquals(result.length, 1)
-                        t.assertEquals(result[0].column_default, 'default')
+                        t.assertEquals(result[0].COLUMN_DEFAULT, 'default')
                         client.end()
                         done()
                     })

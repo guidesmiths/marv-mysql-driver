@@ -35,9 +35,13 @@ marv.scan(directory, (err, migrations) => {
 ```
 
 ## Testing
+Recent docker images of MySQL require the following SQL to be executed before the tests will run
+```
+update user set authentication_string=password(''), plugin='mysql_native_password' where user='root';
+```
+
 ```bash
 npm install # or yarn
 npm run docker
 npm test
 ```
-
