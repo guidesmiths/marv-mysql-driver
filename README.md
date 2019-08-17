@@ -1,5 +1,5 @@
-[![NPM version](https://img.shields.io/npm/v/marv.svg?style=flat-square)](https://www.npmjs.com/package/marv)
-[![NPM downloads](https://img.shields.io/npm/dm/marv.svg?style=flat-square)](https://www.npmjs.com/package/marv)
+[![NPM version](https://img.shields.io/npm/v/marv.svg?style=flat-square)](https://www.npmjs.com/package/marv-mysql-driver)
+[![NPM downloads](https://img.shields.io/npm/dm/marv.svg?style=flat-square)](https://www.npmjs.com/package/marv-mysql-driver)
 [![Build Status](https://img.shields.io/travis/guidesmiths/marv-mysql-driver/master.svg)](https://travis-ci.org/guidesmiths/marv-mysql-driver)
 [![Maintainability](https://api.codeclimate.com/v1/badges/621e711c2cd6077f5ad3/maintainability)](https://codeclimate.com/github/guidesmiths/marv-mysql-driver/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/621e711c2cd6077f5ad3/test_coverage)](https://codeclimate.com/github/guidesmiths/marv-mysql-driver/test_coverage)
