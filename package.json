@@ -4,34 +4,37 @@
   "description": "A mysql marv driver implementation",
   "main": "index.js",
   "scripts": {
-    "test": "node test/suite.js",
+    "coverage": "nyc --report html --reporter lcov --reporter text-summary node test/suite.js",
+    "codeclimate": "(test -e .codeclimate && npm run coverage && source .codeclimate) || echo skipping codeclimate",
+    "docker": "docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql:5",
+    "docker:fix": "docker exec -it  mysql mysql --database=mysql --execute \"UPDATE user SET authentication_string='', plugin='mysql_native_password' WHERE user='root';\"",
     "lint": "eslint .",
     "prepush": "npm run lint && npm test",
-    "docker:fix": "docker exec -it  mysql mysql --database=mysql --execute \"UPDATE user SET authentication_string='', plugin='mysql_native_password' WHERE user='root';\"",
-    "docker": "docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql:8"
+    "test": "node test/suite.js"
   },
   "author": "GuideSmiths Ltd",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-imperative": "^2.1.0",
-    "eslint-plugin-imperative": "^2.1.0",
+    "eslint": "^6.1.0",
+    "eslint-config-imperative": "^3.0.0",
+    "eslint-plugin-imperative": "^3.0.0",
     "hath": "^1.0.1",
     "hath-assert": "^0.2.0",
     "hath-report-spec": "^0.1.0",
-    "husky": "^0.14.3",
+    "husky": "^3.0.3",
     "marv-compliance-tests": "^2.0.0"
   },
   "dependencies": {
-    "async": "^2.6.2",
-    "debug": "^3.1.0",
-    "lodash": "^4.17.11",
-    "marv": "^2.2.0",
-    "mysql": "^2.16.0"
+    "async": "^3.1.0",
+    "debug": "^4.1.1",
+    "lodash": "^4.17.15",
+    "marv": "^2.4.1",
+    "mysql": "^2.17.1"
   },
   "keywords": [
     "marv",
     "database",
+    "db",
     "migration",
     "migrate",
     "mysql"

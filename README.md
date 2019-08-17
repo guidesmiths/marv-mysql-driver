@@ -1,5 +1,11 @@
+[![NPM version](https://img.shields.io/npm/v/marv.svg?style=flat-square)](https://www.npmjs.com/package/marv)
+[![NPM downloads](https://img.shields.io/npm/dm/marv.svg?style=flat-square)](https://www.npmjs.com/package/marv)
 [![Build Status](https://img.shields.io/travis/guidesmiths/marv-mysql-driver/master.svg)](https://travis-ci.org/guidesmiths/marv-mysql-driver)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f4f00937958b3ad25af5/maintainability)](https://codeclimate.com/github/cressie176/marv-mysql-driver/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/f4f00937958b3ad25af5/test_coverage)](https://codeclimate.com/github/cressie176/marv-mysql-driver/test_coverage)
 [![Code Style](https://img.shields.io/badge/code%20style-imperative-brightgreen.svg)](https://github.com/guidesmiths/eslint-config-imperative)
+[![Dependency Status](https://david-dm.org/guidesmiths/marv-mysql-driver.svg)](https://david-dm.org/guidesmiths/marv-mysql-driver)
+[![devDependencies Status](https://david-dm.org/guidesmiths/marv-mysql-driver/dev-status.svg)](https://david-dm.org/guidesmiths/marv-mysql-driver?type=dev)
 
 # marv-mysql-driver
 A mysql driver for [marv](https://www.npmjs.com/package/marv)
@@ -11,37 +17,46 @@ migrations/
   |- 002.create-another-table.sql
 ```
 
+### Promises
 ```js
-const marv = require('marv')
-const mysqlDriver = require('marv-mysql-driver')
-const directory = path.join(process.cwd(), 'migrations' )
-const driver = mysqlDriver({
-    table: 'db_migrations',     // defaults to 'migrations'
-    connection: {               // the connection sub document is passed directly to mysql.createConnection
-        host: 'localhost',
-        port: 3306,
-        database: 'example',
-        user: 'me',
-        password: 'secret',
-        multipleStatements: true    // See https://www.npmjs.com/package/mysql#multiple-statement-queries
-    }
-})
+const marv = require('marv/api/promise'); // <-- Promise API
+const driver = require('marv-mysql-driver');
+const directory = path.resolve('migrations');
+const connection = {
+  // Properties are passed straight mysql.createConnection
+  host: 'mysql.example.com',
+  multipleStatements: true    // See https://www.npmjs.com/package/mysql#multiple-statement-queries
+};
+
+const migrations = await marv.scan(directory);
+await marv.migrate(migrations, driver({ connection });
+// Profit :)
+```
+
+### Callbacks
+```js
+const marv = require('marv/api/callback'); // <-- Callback API
+const driver = require('marv-mysql-driver');
+const directory = path.resolve('migrations');
+const connection = {
+  // Properties are passed straight mysql.createConnection
+  host: 'mysql.example.com',
+  multipleStatements: true    // See https://www.npmjs.com/package/mysql#multiple-statement-queries
+};
+
 marv.scan(directory, (err, migrations) => {
+  if (err) throw err
+  // Connection properties are passed straight mysql.createConnection
+  marv.migrate(migrations, driver({ connection }), (err) => {
     if (err) throw err
-    marv.migrate(migrations, driver, (err) => {
-        if (err) throw err
-    })
+    // Profit :)
+  })
 })
 ```
 
 ## Testing
-Recent docker images of MySQL require the following SQL to be executed before the tests will run
-```
-UPDATE user SET authentication_string='', plugin='mysql_native_password' WHERE user='root';
-```
-
 ```bash
-npm install # or yarn
+npm install
 npm run docker
 npm test
 ```
