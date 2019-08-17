@@ -20,7 +20,8 @@
     "hath-assert": "^0.2.0",
     "hath-report-spec": "^0.1.0",
     "husky": "^3.0.3",
-    "marv-compliance-tests": "^2.0.0"
+    "marv-compliance-tests": "^2.0.0",
+    "nyc": "^14.1.1"
   },
   "dependencies": {
     "async": "^3.1.0",
