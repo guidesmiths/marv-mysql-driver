@@ -5,9 +5,8 @@ services:
 
 before_install:
   - sudo service mysql stop
-  - docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql:8
+  - docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql:5
   - sleep 10
-  - docker exec -it  mysql mysql --database=mysql --execute "UPDATE user SET authentication_string='', plugin='mysql_native_password' WHERE user='root';"
 
 language: node_js
 
@@ -15,3 +14,4 @@ node_js:
   - "6"
   - "8"
   - "10"
+  - "12"
