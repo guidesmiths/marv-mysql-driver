@@ -51,7 +51,7 @@
   "homepage": "https://github.com/guidesmiths/marv-mysql-driver#readme",
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm run coverage"
+      "pre-push": "npm run lint && npm run codeclimate"
     }
   }
 }
