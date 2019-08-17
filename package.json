@@ -8,7 +8,6 @@
     "codeclimate": "(test -e .codeclimate && npm run coverage && source .codeclimate) || echo skipping codeclimate",
     "docker": "docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql mysql:5",
     "lint": "eslint .",
-    "prepush": "npm run lint && npm test",
     "test": "node test/suite.js"
   },
   "author": "GuideSmiths Ltd",
@@ -48,5 +47,10 @@
   "bugs": {
     "url": "https://github.com/guidesmiths/marv-mysql-driver/issues"
   },
-  "homepage": "https://github.com/guidesmiths/marv-mysql-driver#readme"
+  "homepage": "https://github.com/guidesmiths/marv-mysql-driver#readme",
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint && npm test"
+    }
+  }
 }
