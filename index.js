@@ -4,7 +4,6 @@ var _ = require('lodash');
 var async = require('async');
 var format = require('util').format;
 var debug = require('debug')('marv:mysql-driver');
-var marv = require('marv');
 var supportedDirectives = ['audit', 'comment', 'skip'];
 var pkg = require('./package.json');
 
@@ -83,8 +82,8 @@ module.exports = function(options) {
     });
   }
 
-  function runMigration(_migration, cb) {
-    var migration = _.merge({}, _migration, { directives: marv.parseDirectives(_migration.script) });
+  function runMigration(migration, cb) {
+    _.defaults(migration, { directives: {}  });
 
     checkDirectives(migration.directives);
 

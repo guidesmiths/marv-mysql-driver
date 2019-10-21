@@ -1,5 +1,10 @@
 # Change Log
 
+## [3.0.0]
+### Changed
+- Removed dependency on marv
+- Updated dependencies
+
 ## [2.0.2]
 ### Fixed
 - Badges

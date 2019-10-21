@@ -20,14 +20,14 @@
     "hath-assert": "^0.2.0",
     "hath-report-spec": "^0.1.0",
     "husky": "^3.0.3",
-    "marv-compliance-tests": "^2.0.0",
+    "marv": "^3.1.0",
+    "marv-compliance-tests": "^3.0.0",
     "nyc": "^14.1.1"
   },
   "dependencies": {
     "async": "^3.1.0",
     "debug": "^4.1.1",
     "lodash": "^4.17.15",
-    "marv": "^2.4.1",
     "mysql": "^2.17.1"
   },
   "keywords": [
