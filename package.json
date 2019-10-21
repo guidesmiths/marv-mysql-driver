@@ -13,7 +13,7 @@
   "author": "GuideSmiths Ltd",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^6.1.0",
+    "eslint": "^6.5.1",
     "eslint-config-imperative": "^3.0.0",
     "eslint-plugin-imperative": "^3.0.0",
     "hath": "^1.0.1",
