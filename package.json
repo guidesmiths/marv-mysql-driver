@@ -13,7 +13,7 @@
   "author": "GuideSmiths Ltd",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^6.5.1",
+    "eslint": "^6.8.0",
     "eslint-config-imperative": "^3.0.0",
     "eslint-plugin-imperative": "^3.0.0",
     "hath": "^1.0.1",
@@ -22,7 +22,7 @@
     "husky": "^3.0.3",
     "marv": "^3.1.0",
     "marv-compliance-tests": "^3.0.0",
-    "nyc": "^14.1.1"
+    "nyc": "^15.0.0"
   },
   "dependencies": {
     "async": "^3.1.0",
