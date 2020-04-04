@@ -57,6 +57,8 @@ marv.scan(directory, (err, migrations) => {
 ## Testing
 ```bash
 npm install
-npm run docker
+npm run mysql5
+npm run mysql8
+sleep 10
 npm test
 ```
