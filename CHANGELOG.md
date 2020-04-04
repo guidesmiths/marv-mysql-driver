@@ -3,6 +3,7 @@
 ## [Unreleased]
 ### Changed
 - Updated dependencies
+- Added support for mysql8 (via https://github.com/sidorares/node-mysql2)
 
 ## [3.0.0]
 ### Changed

@@ -2,21 +2,21 @@ var Hath = require('hath');
 var complianceTests = require('marv-compliance-tests');
 var driverTests = require('./driver-tests');
 var driver = require('..');
-var mysql = require('mysql');
+var mysql = require('mysql2');
 var report = require('hath-report-spec');
 require('hath-assert')(Hath);
 
 function setup(t, done) {
   var config = {
     table: 'mysql_migrations',
-    quiet: true,
     connection: {
       host: 'localhost',
       port: 3306,
       database: 'marv_tests',
       user: 'root',
       password: '',
-      multipleStatements: true
+      multipleStatements: true,
+      timezone: '+00:00',
     }
   };
   t.locals.config = config;

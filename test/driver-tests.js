@@ -1,7 +1,7 @@
 var Hath = require('hath');
 var marv = require('marv');
 var path = require('path');
-var mysql = require('mysql');
+var mysql = require('mysql2');
 var fs = require('fs');
 var async = require('async');
 require('hath-assert')(Hath);
@@ -57,7 +57,7 @@ function shouldEnsureNamespaceColumn(t, done) {
           client.query(checkNamespace, function (err, result) {
             if (err) throw err;
             t.assertEquals(result.length, 1);
-            t.assertEquals(result[0].column_default, 'default');
+            t.assertEquals(result[0].column_default || result[0].COLUMN_DEFAULT, 'default');
             client.end();
             done();
           });

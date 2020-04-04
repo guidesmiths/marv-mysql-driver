@@ -21,20 +21,27 @@ module.exports = function(options) {
     unlockMigrationsLockTable: load('unlock-migrations-lock-table.sql'),
     insertMigration: load('insert-migration.sql')
   };
-  var mysql = config.mysql || require('mysql');
+  var mysql = config.mysql || require('mysql2');
   var lockClient;
   var userClient;
   var migrationClient;
 
   function connect(cb) {
-    lockClient = mysql.createConnection(config.connection);
-    migrationClient = mysql.createConnection(_.merge({}, config.connection, { timezone: 'utc', charset: 'utf8_general_ci', multipleStatements: true }));
-    userClient = mysql.createConnection(config.connection);
-    debug('Connecting to %s', getLoggableUrl());
+    // See https://github.com/sidorares/node-mysql2/issues/1136
     async.series([
-      lockClient.connect.bind(lockClient),
-      migrationClient.connect.bind(migrationClient),
-      userClient.connect.bind(userClient)
+      function(cb) {
+        lockClient = mysql.createConnection(config.connection);
+        lockClient.connect(cb);
+      },
+      function(cb) {
+        migrationClient = mysql.createConnection(_.merge({}, config.connection, { timezone: '+00:00', charset: 'utf8_general_ci', multipleStatements: true }));
+        migrationClient.connect(cb);
+      },
+      function(cb) {
+        userClient = mysql.createConnection(config.connection);
+        debug('Connecting to %s', getLoggableUrl());
+        userClient.connect(cb);
+      }
     ], guard(cb));
   }
 
