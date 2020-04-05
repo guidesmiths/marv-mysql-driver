@@ -16,9 +16,7 @@ One of:
 * [mysql](https://www.npmjs.com/package/mysql)
 * [mysql2](https://www.npmjs.com/package/mysql2)
 
-marv-mysql-driver will automatically use whichever library you have installed **but does not package either of these libraries**.
-
-Please read the [troubleshooting](#troubleshooting) notes if using [mysql](https://www.npmjs.com/package/mysql) with MySQL 8.0 (or above).
+marv-mysql-driver will automatically use whichever library you have installed **but does not package either of these libraries**. Please read the [troubleshooting](#troubleshooting) notes if using [mysql](https://www.npmjs.com/package/mysql) with MySQL 8.0 (or above).
 
 ## Installation
 ```
