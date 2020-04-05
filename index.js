@@ -160,7 +160,7 @@ module.exports = function(options) {
   }
 
   function optional(library) {
-    debug(`Require optional library: ${library}`);
+    debug('Require optional library: %s', library);
     var client;
     try {
       client = require(library);
