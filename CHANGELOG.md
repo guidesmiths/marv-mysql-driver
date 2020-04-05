@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.0.1]
+### Changed
+- Support both mysql and mysql2
+
 ## [4.0.0]
 ### Changed
 - Updated dependencies
