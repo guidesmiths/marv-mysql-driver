@@ -1,4 +1,5 @@
 var driver = require('..');
+var mysql2 = require('mysql2');
 
 module.exports = function(mysql, port) {
   return function setup(t, done) {
@@ -76,7 +77,7 @@ module.exports = function(mysql, port) {
       }
     };
     t.locals.migration = t.locals.migrations.simple;
-    var connection = mysql.createConnection({ user: 'root', port: port });
+    var connection = mysql2.createConnection({ user: 'root', port: port });
     connection.connect(function(err) {
       if (err) throw err;
       connection.query('CREATE DATABASE IF NOT EXISTS marv_tests', function(err) {
