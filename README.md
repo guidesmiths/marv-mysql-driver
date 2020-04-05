@@ -10,6 +10,16 @@
 # marv-mysql-driver
 A mysql driver for [marv](https://www.npmjs.com/package/marv)
 
+## Prerequisites
+Either [mysql](https://www.npmjs.com/package/mysql) or [mysql2](https://www.npmjs.com/package/mysql2). marv-mysql-driver will automatically use whichever library you have installed **but does not package either of these libraries**
+
+Please read the [troubleshooting](#troubleshooting) notes if using [mysql](https://www.npmjs.com/package/mysql) with MySQL 8.0 (or above).
+
+## Installation
+```
+npm i marv marv-mysql-driver
+```
+
 ## Usage
 ```
 migrations/
@@ -39,14 +49,14 @@ const marv = require('marv/api/callback'); // <-- Callback API
 const driver = require('marv-mysql-driver');
 const directory = path.resolve('migrations');
 const connection = {
-  // Properties are passed straight mysql.createConnection
+  // Properties are passed straight [mysql|mysql2].createConnection
   host: 'mysql.example.com',
   multipleStatements: true    // See https://www.npmjs.com/package/mysql#multiple-statement-queries
 };
 
 marv.scan(directory, (err, migrations) => {
   if (err) throw err
-  // Connection properties are passed straight mysql.createConnection
+  // Connection properties are passed straight [mysql|mysql2].createConnection
   marv.migrate(migrations, driver({ connection }), (err) => {
     if (err) throw err
     // Profit :)
@@ -54,11 +64,23 @@ marv.scan(directory, (err, migrations) => {
 })
 ```
 
+## Troubleshooting
+```
+Client does not support authentication protocol requested by server; consider upgrading MySQL client
+```
+
+MySQL v8 changed the [default authentication plugin](https://dev.mysql.com/doc/refman/8.0/en/pluggable-authentication.html) to `caching_sha2_password`, which, at time of writing is not supported by [mysql](https://github.com/mysqljs/mysql/issues/2001).
+
+Therefore MySQL v8 users either need to [change](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_default_authentication_plugin) the default authentication plugin back to `mysql_native_password` or install [mysql2](https://www.npmjs.com/package/mysql2).
+
+MySQL v5 users can use either [mysql](https://www.npmjs.com/package/mysql) or [mysql2](https://www.npmjs.com/package/mysql2).
+
 ## Testing
 ```bash
 npm install
 npm run mysql5
 npm run mysql8
-sleep 10
+npm run mysql8-native-password
+sleep 30
 npm test
 ```

@@ -21,7 +21,7 @@ module.exports = function(options) {
     unlockMigrationsLockTable: load('unlock-migrations-lock-table.sql'),
     insertMigration: load('insert-migration.sql')
   };
-  var mysql = config.mysql || require('mysql2');
+  var mysql = getMysql(config);
   var lockClient;
   var userClient;
   var migrationClient;
@@ -151,6 +151,23 @@ module.exports = function(options) {
     return function(err) {
       cb(err);
     };
+  }
+
+  function getMysql(config) {
+    var mysql = config.mysql || optional('mysql2') || optional('mysql');
+    if (!mysql) throw new Error('Please install mysql or mysql2');
+    return mysql;
+  }
+
+  function optional(library) {
+    debug(`Require optional library: ${library}`);
+    var client;
+    try {
+      client = require(library);
+    } catch (err) {
+      // OK
+    }
+    return client;
   }
 
   return {

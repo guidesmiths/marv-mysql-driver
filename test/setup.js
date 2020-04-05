@@ -1,10 +1,10 @@
 var driver = require('..');
-var mysql = require('mysql2');
 
-module.exports = function(port) {
+module.exports = function(mysql, port) {
   return function setup(t, done) {
     var config = {
       table: 'mysql_migrations',
+      mysql: mysql,
       connection: {
         host: 'localhost',
         port: port,

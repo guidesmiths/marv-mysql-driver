@@ -1,14 +1,13 @@
 var Hath = require('hath');
 var marv = require('marv');
 var path = require('path');
-var mysql = require('mysql2');
 var fs = require('fs');
 var async = require('async');
 require('hath-assert')(Hath);
 
 function shouldRunMigration(t, done) {
   const dropTables = load(t, ['sql', 'drop-tables.sql']);
-  const client = mysql.createConnection(t.locals.config.connection);
+  const client = t.locals.config.mysql.createConnection(t.locals.config.connection);
   client.connect(function(err) {
     if (err) throw err;
     client.query(dropTables, function(err) {
@@ -42,7 +41,7 @@ function shouldEnsureNamespaceColumn(t, done) {
   const dropTables = load(t, ['sql', 'drop-tables.sql']);
   const ensureLegacyMigrations = load(t, ['sql', 'ensure-legacy-migrations-tables.sql']);
   const checkNamespace = load(t, ['..', 'sql', 'check-namespace-column.sql']);
-  const client = mysql.createConnection(t.locals.config.connection);
+  const client = t.locals.config.mysql.createConnection(t.locals.config.connection);
   client.connect(function(err) {
     if (err) throw err;
     async.series([
