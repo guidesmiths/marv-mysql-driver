@@ -11,7 +11,12 @@
 A mysql driver for [marv](https://www.npmjs.com/package/marv)
 
 ## Prerequisites
-Either [mysql](https://www.npmjs.com/package/mysql) or [mysql2](https://www.npmjs.com/package/mysql2). marv-mysql-driver will automatically use whichever library you have installed **but does not package either of these libraries**
+One of:
+
+* [mysql](https://www.npmjs.com/package/mysql)
+* [mysql2](https://www.npmjs.com/package/mysql2)
+
+marv-mysql-driver will automatically use whichever library you have installed **but does not package either of these libraries**.
 
 Please read the [troubleshooting](#troubleshooting) notes if using [mysql](https://www.npmjs.com/package/mysql) with MySQL 8.0 (or above).
 
@@ -69,9 +74,7 @@ marv.scan(directory, (err, migrations) => {
 Client does not support authentication protocol requested by server; consider upgrading MySQL client
 ```
 
-MySQL v8 changed the [default authentication plugin](https://dev.mysql.com/doc/refman/8.0/en/pluggable-authentication.html) to `caching_sha2_password`, which, at time of writing is not supported by [mysql](https://github.com/mysqljs/mysql/issues/2001).
-
-Therefore MySQL v8 users either need to [change](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_default_authentication_plugin) the default authentication plugin back to `mysql_native_password` or install [mysql2](https://www.npmjs.com/package/mysql2).
+MySQL v8 changed the [default authentication plugin](https://dev.mysql.com/doc/refman/8.0/en/pluggable-authentication.html) to `caching_sha2_password`, which, at time of writing is not supported by [mysql](https://github.com/mysqljs/mysql/issues/2001). Therefore MySQL v8 users either need to [change](https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_default_authentication_plugin) the default authentication plugin back to `mysql_native_password` or install [mysql2](https://www.npmjs.com/package/mysql2).
 
 MySQL v5 users can use either [mysql](https://www.npmjs.com/package/mysql) or [mysql2](https://www.npmjs.com/package/mysql2).
 
