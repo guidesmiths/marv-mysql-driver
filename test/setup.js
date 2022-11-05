@@ -4,10 +4,10 @@ const driver = require('..');
 module.exports = (mysql, port) => function setup(t, done) {
   const config = {
     table: 'mysql_migrations',
-    mysql: mysql,
+    mysql,
     connection: {
       host: 'localhost',
-      port: port,
+      port,
       database: 'marv_tests',
       user: 'root',
       password: '',
@@ -76,7 +76,7 @@ module.exports = (mysql, port) => function setup(t, done) {
     },
   };
   t.locals.migration = t.locals.migrations.simple;
-  const connection = mysql2.createConnection({ user: 'root', port: port });
+  const connection = mysql2.createConnection({ user: 'root', port });
   connection.connect((err) => {
     if (err) throw err;
     connection.query('CREATE DATABASE IF NOT EXISTS marv_tests', (err) => {

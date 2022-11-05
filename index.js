@@ -144,7 +144,7 @@ module.exports = (options) => {
   }
 
   function decorate(err, migration) {
-    return _.merge(err, { migration: migration });
+    return _.merge(err, { migration });
   }
 
   function guard(cb) {
@@ -154,14 +154,14 @@ module.exports = (options) => {
   }
 
   return {
-    connect: connect,
-    disconnect: disconnect,
-    dropMigrations: dropMigrations,
-    ensureMigrations: ensureMigrations,
-    lockMigrations: lockMigrations,
-    unlockMigrations: unlockMigrations,
-    getMigrations: getMigrations,
-    runMigration: runMigration,
+    connect,
+    disconnect,
+    dropMigrations,
+    ensureMigrations,
+    lockMigrations,
+    unlockMigrations,
+    getMigrations,
+    runMigration,
   };
 };
 

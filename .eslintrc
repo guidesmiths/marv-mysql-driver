@@ -13,7 +13,6 @@
     "no-param-reassign": ["error", { "props": false } ],
     "no-use-before-define": 0,
     "space-before-function-paren": 0,
-    "object-shorthand": 0,
     "global-require": 0,
     "prefer-destructuring": 0,
     "consistent-return": 0,
