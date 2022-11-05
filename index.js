@@ -9,7 +9,6 @@ const supportedDirectives = ['audit', 'comment', 'skip'];
 const pkg = require('./package.json');
 
 module.exports = function(options) {
-
   const config = _.merge({ table: 'migrations', connection: {} }, _.omit(options, 'logger'));
   const logger = options.logger || console;
   const SQL = {
@@ -154,23 +153,6 @@ module.exports = function(options) {
     };
   }
 
-  function getMysql(config) {
-    const mysql = config.mysql || optional('mysql2') || optional('mysql');
-    if (!mysql) throw new Error('Please install mysql or mysql2');
-    return mysql;
-  }
-
-  function optional(library) {
-    debug('Require optional library: %s', library);
-    let client;
-    try {
-      client = require(library);
-    } catch (err) {
-      // OK
-    }
-    return client;
-  }
-
   return {
     connect: connect,
     disconnect: disconnect,
@@ -182,3 +164,20 @@ module.exports = function(options) {
     runMigration: runMigration,
   };
 };
+
+function getMysql(config) {
+  const mysql = config.mysql || optional('mysql2') || optional('mysql');
+  if (!mysql) throw new Error('Please install mysql or mysql2');
+  return mysql;
+}
+
+function optional(library) {
+  debug('Require optional library: %s', library);
+  let client;
+  try {
+    client = require(library);
+  } catch (err) {
+    // OK
+  }
+  return client;
+}

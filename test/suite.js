@@ -18,9 +18,9 @@ module.exports = Hath.suite('All Tests', [
 
 ]);
 
-function buildSuite(name, mysql, port) {
+function buildSuite(name, client, port) {
   return Hath.suite(name, [
-    setup(mysql, port),
+    setup(client, port),
     complianceTests,
     driverTests,
   ]);
