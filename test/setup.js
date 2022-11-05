@@ -1,5 +1,5 @@
-const driver = require('..');
 const mysql2 = require('mysql2');
+const driver = require('..');
 
 module.exports = function(mysql, port) {
   return function setup(t, done) {
