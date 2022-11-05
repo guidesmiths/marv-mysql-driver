@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 const async = require('async');
-const format = require('util').format;
+const { format } = require('util');
 const debug = require('debug')('marv:mysql-driver');
 
 const supportedDirectives = ['audit', 'comment', 'skip'];
