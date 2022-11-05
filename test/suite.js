@@ -22,7 +22,7 @@ function buildSuite(name, mysql, port) {
   return Hath.suite(name, [
     setup(mysql, port),
     complianceTests,
-    driverTests
+    driverTests,
   ]);
 };
 

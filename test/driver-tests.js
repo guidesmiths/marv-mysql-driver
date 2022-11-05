@@ -47,7 +47,7 @@ function shouldEnsureNamespaceColumn(t, done) {
     if (err) throw err;
     async.series([
       client.query.bind(client, dropTables),
-      client.query.bind(client, ensureLegacyMigrations)
+      client.query.bind(client, ensureLegacyMigrations),
     ], function (err) {
       if (err) throw err;
       marv.scan(path.join(__dirname, 'migrations'), function(err, migrations) {
@@ -73,5 +73,5 @@ function load(t, location) {
 
 module.exports = Hath.suite('Driver Tests', [
   shouldRunMigration,
-  shouldEnsureNamespaceColumn
+  shouldEnsureNamespaceColumn,
 ]);

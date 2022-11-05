@@ -19,7 +19,7 @@ module.exports = function(options) {
     dropMigrationsTables: load('drop-migrations-tables.sql'),
     lockMigrationsLockTable: load('lock-migrations-lock-table.sql'),
     unlockMigrationsLockTable: load('unlock-migrations-lock-table.sql'),
-    insertMigration: load('insert-migration.sql')
+    insertMigration: load('insert-migration.sql'),
   };
   const mysql = getMysql(config);
   let lockClient;
@@ -41,7 +41,7 @@ module.exports = function(options) {
         userClient = mysql.createConnection(config.connection);
         debug('Connecting to %s', getLoggableUrl());
         userClient.connect(cb);
-      }
+      },
     ], guard(cb));
   }
 
@@ -50,7 +50,7 @@ module.exports = function(options) {
     async.series([
       lockClient.end.bind(lockClient),
       migrationClient.end.bind(migrationClient),
-      userClient.end.bind(userClient)
+      userClient.end.bind(userClient),
     ], guard(cb));
   }
 
@@ -61,7 +61,7 @@ module.exports = function(options) {
   function ensureMigrations(cb) {
     async.series([
       migrationClient.query.bind(migrationClient, SQL.ensureMigrationsTables),
-      migrationClient.query.bind(migrationClient, SQL.checkNamespaceColumn)
+      migrationClient.query.bind(migrationClient, SQL.checkNamespaceColumn),
     ], ensureNamespace);
 
     function ensureNamespace(err, results) {
@@ -108,7 +108,7 @@ module.exports = function(options) {
           migration.directives.comment || migration.comment,
           migration.timestamp,
           migration.checksum,
-          migration.namespace || 'default'
+          migration.namespace || 'default',
         ], function(err) {
           if (err) return cb(decorate(err, migration));
           cb();
@@ -178,6 +178,6 @@ module.exports = function(options) {
     lockMigrations: lockMigrations,
     unlockMigrations: unlockMigrations,
     getMigrations: getMigrations,
-    runMigration: runMigration
+    runMigration: runMigration,
   };
 };
