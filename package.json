@@ -21,7 +21,7 @@
     "hath-assert": "^0.2.0",
     "hath-report-spec": "^0.1.0",
     "husky": "^4.2.3",
-    "marv": "^3.1.0",
+    "marv": "^6.0.0",
     "marv-compliance-tests": "^3.0.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
