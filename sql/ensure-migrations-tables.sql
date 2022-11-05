@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS migrations (
 );
 
 CREATE TABLE IF NOT EXISTS migrations_lock (
-    empty_table BOOLEAN
+    empty_table BOOLEAN,
+    PRIMARY KEY (empty_table)
 );
