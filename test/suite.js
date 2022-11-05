@@ -26,8 +26,6 @@ function buildSuite(name, mysql, port) {
   ]);
 }
 
-
-
 if (module === require.main) {
   module.exports(new Hath(report));
 }
