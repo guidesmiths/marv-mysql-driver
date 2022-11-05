@@ -1,25 +1,30 @@
 # Change Log
 
-## [4.0.1]
-### Changed
+## 4.0.2
+
+- Add a primary key to the lock table via https://github.com/guidesmiths/marv-mysql-driver/pull/20. Thanks @uwburn.
+- Update dependencies
+- Tidy README
+- Switch to eslint-config-airbnb-base
+
+## 4.0.1
+
 - Support both mysql and mysql2
 
-## [4.0.0]
-### Changed
+## 4.0.0
+
 - Updated dependencies
 - Added support for mysql8 (via https://github.com/sidorares/node-mysql2)
 
-## [3.0.0]
-### Changed
+## 3.0.0
+
 - Removed dependency on marv
 - Updated dependencies
 
-## [2.0.2]
-### Fixed
+## 2.0.2
+
 - Badges
 
-## [2.0.1]
-### Changed
-- General modernisation
+## 2.0.1
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
+- General modernisation
