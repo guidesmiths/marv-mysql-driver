@@ -50,7 +50,7 @@ function shouldEnsureNamespaceColumn(t, done) {
       client.query.bind(client, ensureLegacyMigrations),
     ], function (err) {
       if (err) throw err;
-      marv.scan(path.join(__dirname, 'migrations'), function(err, migrations) {
+      marv.scan(path.join(__dirname, 'migrations'), function(err) {
         if (err) throw err;
         marv.migrate({}, t.locals.driver, function(err) {
           if (err) throw err;
