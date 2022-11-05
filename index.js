@@ -8,7 +8,7 @@ const debug = require('debug')('marv:mysql-driver');
 const supportedDirectives = ['audit', 'comment', 'skip'];
 const pkg = require('./package.json');
 
-module.exports = function(options) {
+module.exports = (options) => {
   const config = _.merge({ table: 'migrations', connection: {} }, _.omit(options, 'logger'));
   const logger = options.logger || console;
   const SQL = {
@@ -29,15 +29,15 @@ module.exports = function(options) {
   function connect(cb) {
     // See https://github.com/sidorares/node-mysql2/issues/1136
     async.series([
-      function(cb) {
+      (cb) => {
         lockClient = mysql.createConnection(config.connection);
         lockClient.connect(cb);
       },
-      function(cb) {
+      (cb) => {
         migrationClient = mysql.createConnection(_.merge({}, config.connection, { timezone: '+00:00', charset: 'utf8_general_ci', multipleStatements: true }));
         migrationClient.connect(cb);
       },
-      function(cb) {
+      (cb) => {
         userClient = mysql.createConnection(config.connection);
         debug('Connecting to %s', getLoggableUrl());
         userClient.connect(cb);
@@ -148,7 +148,7 @@ module.exports = function(options) {
   }
 
   function guard(cb) {
-    return function(err) {
+    return (err) => {
       cb(err);
     };
   }
