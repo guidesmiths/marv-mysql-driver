@@ -15,9 +15,8 @@
   "author": "GuideSmiths Ltd",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-imperative": "^3.0.0",
-    "eslint-plugin-imperative": "^3.0.0",
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "hath": "^1.0.1",
     "hath-assert": "^0.2.0",
     "hath-report-spec": "^0.1.0",
