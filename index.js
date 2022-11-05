@@ -1,17 +1,17 @@
-var fs = require('fs');
-var path = require('path');
-var _ = require('lodash');
-var async = require('async');
-var format = require('util').format;
-var debug = require('debug')('marv:mysql-driver');
-var supportedDirectives = ['audit', 'comment', 'skip'];
-var pkg = require('./package.json');
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
+const async = require('async');
+const format = require('util').format;
+const debug = require('debug')('marv:mysql-driver');
+const supportedDirectives = ['audit', 'comment', 'skip'];
+const pkg = require('./package.json');
 
 module.exports = function(options) {
 
-  var config = _.merge({ table: 'migrations', connection: {} }, _.omit(options, 'logger'));
-  var logger = options.logger || console;
-  var SQL = {
+  const config = _.merge({ table: 'migrations', connection: {} }, _.omit(options, 'logger'));
+  const logger = options.logger || console;
+  const SQL = {
     ensureMigrationsTables: load('ensure-migrations-tables.sql'),
     checkNamespaceColumn: load('check-namespace-column.sql'),
     addNamespaceColumn: load('add-namespace-column.sql'),
@@ -21,10 +21,10 @@ module.exports = function(options) {
     unlockMigrationsLockTable: load('unlock-migrations-lock-table.sql'),
     insertMigration: load('insert-migration.sql')
   };
-  var mysql = getMysql(config);
-  var lockClient;
-  var userClient;
-  var migrationClient;
+  const mysql = getMysql(config);
+  let lockClient;
+  let userClient;
+  let migrationClient;
 
   function connect(cb) {
     // See https://github.com/sidorares/node-mysql2/issues/1136
@@ -119,7 +119,7 @@ module.exports = function(options) {
   }
 
   function checkDirectives(directives) {
-    var unsupportedDirectives = _.chain(directives).keys().difference(supportedDirectives).value();
+    const unsupportedDirectives = _.chain(directives).keys().difference(supportedDirectives).value();
     if (unsupportedDirectives.length === 0) return;
     if (!config.quiet) {
       logger.warn('Ignoring unsupported directives: %s. Try upgrading %s.', unsupportedDirectives, pkg.name);
@@ -154,14 +154,14 @@ module.exports = function(options) {
   }
 
   function getMysql(config) {
-    var mysql = config.mysql || optional('mysql2') || optional('mysql');
+    const mysql = config.mysql || optional('mysql2') || optional('mysql');
     if (!mysql) throw new Error('Please install mysql or mysql2');
     return mysql;
   }
 
   function optional(library) {
     debug('Require optional library: %s', library);
-    var client;
+    let client;
     try {
       client = require(library);
     } catch (err) {

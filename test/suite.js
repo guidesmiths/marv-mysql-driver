@@ -1,10 +1,10 @@
-var Hath = require('hath');
-var report = require('hath-report-spec');
-var mysql = require('mysql');
-var mysql2 = require('mysql2');
-var complianceTests = require('marv-compliance-tests');
-var driverTests = require('./driver-tests');
-var setup = require('./setup');
+const Hath = require('hath');
+const report = require('hath-report-spec');
+const mysql = require('mysql');
+const mysql2 = require('mysql2');
+const complianceTests = require('marv-compliance-tests');
+const driverTests = require('./driver-tests');
+const setup = require('./setup');
 
 require('hath-assert')(Hath);
 

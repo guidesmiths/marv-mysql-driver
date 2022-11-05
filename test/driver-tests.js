@@ -1,9 +1,9 @@
-var Hath = require('hath');
-var marv = require('marv');
-var path = require('path');
-var fs = require('fs');
-var async = require('async');
-var mysql2 = require('mysql2');
+const Hath = require('hath');
+const marv = require('marv');
+const path = require('path');
+const fs = require('fs');
+const async = require('async');
+const mysql2 = require('mysql2');
 require('hath-assert')(Hath);
 
 function shouldRunMigration(t, done) {
