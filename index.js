@@ -90,7 +90,7 @@ module.exports = function(options) {
   }
 
   function runMigration(migration, cb) {
-    _.defaults(migration, { directives: {}  });
+    _.defaults(migration, { directives: {} });
 
     checkDirectives(migration.directives);
 
