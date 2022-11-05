@@ -30,8 +30,11 @@
   },
   "dependencies": {
     "async": "^3.2.4",
-    "debug": "^4.1.1",
+    "debug": "^4.3.4",
     "lodash": "^4.17.15"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   },
   "keywords": [
     "marv",
