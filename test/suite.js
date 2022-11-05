@@ -24,7 +24,7 @@ function buildSuite(name, mysql, port) {
     complianceTests,
     driverTests,
   ]);
-};
+}
 
 
 
