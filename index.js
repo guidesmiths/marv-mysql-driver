@@ -4,6 +4,7 @@ const _ = require('lodash');
 const async = require('async');
 const format = require('util').format;
 const debug = require('debug')('marv:mysql-driver');
+
 const supportedDirectives = ['audit', 'comment', 'skip'];
 const pkg = require('./package.json');
 
