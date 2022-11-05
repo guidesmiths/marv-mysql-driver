@@ -83,7 +83,7 @@ module.exports = function(options) {
   }
 
   function getMigrations(cb) {
-    migrationClient.query(SQL.retrieveMigrations, function(err, result) {
+    migrationClient.query(SQL.retrieveMigrations, (err, result) => {
       if (err) return cb(err);
       cb(null, result);
     });
@@ -100,7 +100,7 @@ module.exports = function(options) {
     }
 
     debug('Run migration %s: %s\n%s', migration.level, migration.comment, migration.script);
-    userClient.query(migration.script, function(err) {
+    userClient.query(migration.script, (err) => {
       if (err) return cb(decorate(err, migration));
       if (auditable(migration)) {
         return migrationClient.query(SQL.insertMigration, [
@@ -109,7 +109,7 @@ module.exports = function(options) {
           migration.timestamp,
           migration.checksum,
           migration.namespace || 'default',
-        ], function(err) {
+        ], (err) => {
           if (err) return cb(decorate(err, migration));
           cb();
         });

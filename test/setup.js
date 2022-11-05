@@ -78,9 +78,9 @@ module.exports = function(mysql, port) {
     };
     t.locals.migration = t.locals.migrations.simple;
     const connection = mysql2.createConnection({ user: 'root', port: port });
-    connection.connect(function(err) {
+    connection.connect((err) => {
       if (err) throw err;
-      connection.query('CREATE DATABASE IF NOT EXISTS marv_tests', function(err) {
+      connection.query('CREATE DATABASE IF NOT EXISTS marv_tests', (err) => {
         if (err) throw err;
         connection.end(done);
       });

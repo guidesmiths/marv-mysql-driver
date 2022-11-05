@@ -9,21 +9,21 @@ require('hath-assert')(Hath);
 function shouldRunMigration(t, done) {
   const dropTables = load(t, ['sql', 'drop-tables.sql']);
   const client = mysql2.createConnection(t.locals.config.connection);
-  client.connect(function(err) {
+  client.connect((err) => {
     if (err) throw err;
-    client.query(dropTables, function(err) {
+    client.query(dropTables, (err) => {
       if (err) throw err;
-      marv.scan(path.join(__dirname, 'migrations'), function(err, migrations) {
+      marv.scan(path.join(__dirname, 'migrations'), (err, migrations) => {
         if (err) throw err;
-        marv.migrate(migrations, t.locals.driver, function(err) {
+        marv.migrate(migrations, t.locals.driver, (err) => {
           if (err) throw err;
-          client.query('SELECT * FROM foo', function(err, result) {
+          client.query('SELECT * FROM foo', (err, result) => {
             if (err) throw err;
             t.assertEquals(result.length, 1);
             t.assertEquals(result[0].id, 1);
             t.assertEquals(result[0].value, 'foo');
 
-            client.query('SELECT * FROM bar', function(err, result) {
+            client.query('SELECT * FROM bar', (err, result) => {
               if (err) throw err;
               t.assertEquals(result.length, 1);
               t.assertEquals(result[0].id, 1);
@@ -43,18 +43,18 @@ function shouldEnsureNamespaceColumn(t, done) {
   const ensureLegacyMigrations = load(t, ['sql', 'ensure-legacy-migrations-tables.sql']);
   const checkNamespace = load(t, ['..', 'sql', 'check-namespace-column.sql']);
   const client = mysql2.createConnection(t.locals.config.connection);
-  client.connect(function(err) {
+  client.connect((err) => {
     if (err) throw err;
     async.series([
       client.query.bind(client, dropTables),
       client.query.bind(client, ensureLegacyMigrations),
-    ], function (err) {
+    ], (err) => {
       if (err) throw err;
-      marv.scan(path.join(__dirname, 'migrations'), function(err) {
+      marv.scan(path.join(__dirname, 'migrations'), (err) => {
         if (err) throw err;
-        marv.migrate({}, t.locals.driver, function(err) {
+        marv.migrate({}, t.locals.driver, (err) => {
           if (err) throw err;
-          client.query(checkNamespace, function (err, result) {
+          client.query(checkNamespace, (err, result) => {
             if (err) throw err;
             t.assertEquals(result.length, 1);
             t.assertEquals(result[0].column_default || result[0].COLUMN_DEFAULT, 'default');
