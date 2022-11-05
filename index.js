@@ -127,8 +127,8 @@ module.exports = (options) => {
   }
 
   function auditable(migration) {
-    if (migration.hasOwnProperty('directives')) return !/^false$/i.test(migration.directives.audit);
-    if (migration.hasOwnProperty('audit')) {
+    if (Object.prototype.hasOwnProperty.call(migration, 'directives')) return !/^false$/i.test(migration.directives.audit);
+    if (Object.prototype.hasOwnProperty.call(migration, 'audit')) {
       if (!config.quiet) logger.warn("The 'audit' option is deprecated. Please use 'directives.audit' instead.");
       return migration.audit !== false;
     }
