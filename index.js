@@ -175,7 +175,7 @@ function optional(library) {
   debug('Require optional library: %s', library);
   let client;
   try {
-    // eslint-disable-next-line global-require
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     client = require(library);
   } catch (err) {
     // OK
