@@ -3,7 +3,6 @@
 [![Build Status](https://img.shields.io/travis/guidesmiths/marv-mysql-driver/master.svg)](https://travis-ci.org/guidesmiths/marv-mysql-driver)
 [![Maintainability](https://api.codeclimate.com/v1/badges/621e711c2cd6077f5ad3/maintainability)](https://codeclimate.com/github/guidesmiths/marv-mysql-driver/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/621e711c2cd6077f5ad3/test_coverage)](https://codeclimate.com/github/guidesmiths/marv-mysql-driver/test_coverage)
-[![Code Style](https://img.shields.io/badge/code%20style-imperative-brightgreen.svg)](https://github.com/guidesmiths/eslint-config-imperative)
 
 # marv-mysql-driver
 
