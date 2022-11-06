@@ -6,8 +6,8 @@
 - Update dependencies
 - Tidy README
 - Switch to eslint-config-airbnb-base
+- Switch to zUnit
 - Drop support for node versions below 14
-- Migrate to zUnit
 
 ## 4.0.1
 

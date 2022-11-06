@@ -10,14 +10,16 @@
     "mysql8": "docker run -d -p 3308:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql8 mysql:8",
     "mysql8-native-password": "docker run -d -p 3307:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql8-native-password mysql:8 --default-authentication-plugin=mysql_native_password",
     "lint": "eslint .",
-    "test": "zUnit"
+    "test": "zUnit",
+    "prepare": "husky install"
   },
   "author": "GuideSmiths Ltd",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.26.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "husky": "^4.2.3",
+    "eslint-plugin-import": "^2.26.0",
+    "husky": "^8.0.1",
     "marv": "^6.0.0",
     "marv-compliance-tests": "^4.0.1",
     "mysql": "^2.18.1",
@@ -51,10 +53,5 @@
   "bugs": {
     "url": "https://github.com/guidesmiths/marv-mysql-driver/issues"
   },
-  "homepage": "https://github.com/guidesmiths/marv-mysql-driver#readme",
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run lint && npm run codeclimate"
-    }
-  }
+  "homepage": "https://github.com/guidesmiths/marv-mysql-driver#readme"
 }

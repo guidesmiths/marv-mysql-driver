@@ -1,4 +1,4 @@
-const { Suite, Testable } = require('zunit');
+const { Suite } = require('zunit');
 const mysql = require('mysql');
 const mysql2 = require('mysql2');
 const complianceTests = require('marv-compliance-tests');

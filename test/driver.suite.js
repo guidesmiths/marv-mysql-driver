@@ -1,5 +1,5 @@
 const { Suite, Test } = require('zunit');
-const { strictEqual: eq, match } = require('assert');
+const { strictEqual: eq } = require('assert');
 const marv = require('marv');
 const path = require('path');
 const fs = require('fs');
@@ -72,4 +72,3 @@ function load(t, location) {
 }
 
 module.exports = new Suite('Driver Tests').add(shouldRunMigration).add(shouldEnsureNamespaceColumn);
-
