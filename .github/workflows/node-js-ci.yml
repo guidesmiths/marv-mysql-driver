@@ -6,15 +6,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ./node_modules
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
       - run: npm run mysql5
       - run: npm run mysql8
       - run: npm run mysql8-native-password
       - run: sleep 30
-      - run: npm ci
       - run: npm run lint
       - run: npm test
 
@@ -22,15 +30,23 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: "16.x"
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ./node_modules
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
       - run: npm run mysql5
       - run: npm run mysql8
       - run: npm run mysql8-native-password
       - run: sleep 30
-      - run: npm ci
       - run: npm run lint
       - run: npm test
       - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
