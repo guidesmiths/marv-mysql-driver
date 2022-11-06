@@ -1,0 +1,53 @@
+name: Node.js Publish
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      mysql5:
+        image: mysql:5
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      mysql8-native-password:
+        image: mysql:8
+        ports:
+          - 3307:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        options: >-
+          --default-authentication-plugin=mysql_native_password
+      mysql8:
+        image: mysql:8
+        ports:
+          - 3308:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+      - run: sleep 30
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

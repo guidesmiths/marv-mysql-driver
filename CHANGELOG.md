@@ -7,6 +7,7 @@
 - Tidy README
 - Switch to eslint-config-airbnb-base
 - Switch to zUnit
+- Switch to github actions
 - Drop support for node versions below 14
 
 ## 4.0.1
