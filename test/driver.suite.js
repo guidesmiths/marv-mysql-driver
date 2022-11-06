@@ -1,33 +1,33 @@
-const Hath = require('hath');
+const { Suite, Test } = require('zunit');
+const { strictEqual: eq, match } = require('assert');
 const marv = require('marv');
 const path = require('path');
 const fs = require('fs');
 const async = require('async');
 const mysql2 = require('mysql2');
-require('hath-assert')(Hath);
 
-function shouldRunMigration(t, done) {
+const shouldRunMigration = new Test('should run migration', (t, done) => {
   const dropTables = load(t, ['sql', 'drop-tables.sql']);
-  const client = mysql2.createConnection(t.locals.config.connection);
+  const client = mysql2.createConnection(t.locals.get('config').connection);
   client.connect((err) => {
     if (err) throw err;
     client.query(dropTables, (err) => {
       if (err) throw err;
       marv.scan(path.join(__dirname, 'migrations'), (err, migrations) => {
         if (err) throw err;
-        marv.migrate(migrations, t.locals.driver, (err) => {
+        marv.migrate(migrations, t.locals.get('driver1'), (err) => {
           if (err) throw err;
           client.query('SELECT * FROM foo', (err, result) => {
             if (err) throw err;
-            t.assertEquals(result.length, 1);
-            t.assertEquals(result[0].id, 1);
-            t.assertEquals(result[0].value, 'foo');
+            eq(result.length, 1);
+            eq(result[0].id, 1);
+            eq(result[0].value, 'foo');
 
             client.query('SELECT * FROM bar', (err, result) => {
               if (err) throw err;
-              t.assertEquals(result.length, 1);
-              t.assertEquals(result[0].id, 1);
-              t.assertEquals(result[0].value, 'bar');
+              eq(result.length, 1);
+              eq(result[0].id, 1);
+              eq(result[0].value, 'bar');
               client.end();
               done();
             });
@@ -36,13 +36,13 @@ function shouldRunMigration(t, done) {
       });
     });
   });
-}
+});
 
-function shouldEnsureNamespaceColumn(t, done) {
+const shouldEnsureNamespaceColumn = new Test('should ensure namespace column', (t, done) => {
   const dropTables = load(t, ['sql', 'drop-tables.sql']);
   const ensureLegacyMigrations = load(t, ['sql', 'ensure-legacy-migrations-tables.sql']);
   const checkNamespace = load(t, ['..', 'sql', 'check-namespace-column.sql']);
-  const client = mysql2.createConnection(t.locals.config.connection);
+  const client = mysql2.createConnection(t.locals.get('config').connection);
   client.connect((err) => {
     if (err) throw err;
     async.series([
@@ -52,12 +52,12 @@ function shouldEnsureNamespaceColumn(t, done) {
       if (err) throw err;
       marv.scan(path.join(__dirname, 'migrations'), (err) => {
         if (err) throw err;
-        marv.migrate({}, t.locals.driver, (err) => {
+        marv.migrate({}, t.locals.get('driver1'), (err) => {
           if (err) throw err;
           client.query(checkNamespace, (err, result) => {
             if (err) throw err;
-            t.assertEquals(result.length, 1);
-            t.assertEquals(result[0].column_default || result[0].COLUMN_DEFAULT, 'default');
+            eq(result.length, 1);
+            eq(result[0].column_default || result[0].COLUMN_DEFAULT, 'default');
             client.end();
             done();
           });
@@ -65,13 +65,11 @@ function shouldEnsureNamespaceColumn(t, done) {
       });
     });
   });
-}
+});
 
 function load(t, location) {
-  return fs.readFileSync(path.join.apply(null, [__dirname].concat(location)), 'utf-8').replace(/migrations/g, t.locals.config.table);
+  return fs.readFileSync(path.join.apply(null, [__dirname].concat(location)), 'utf-8').replace(/migrations/g, t.locals.get('config').table);
 }
 
-module.exports = Hath.suite('Driver Tests', [
-  shouldRunMigration,
-  shouldEnsureNamespaceColumn,
-]);
+module.exports = new Suite('Driver Tests').add(shouldRunMigration).add(shouldEnsureNamespaceColumn);
+

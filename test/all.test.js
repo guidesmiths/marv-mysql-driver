@@ -1,31 +1,21 @@
-const Hath = require('hath');
-const report = require('hath-report-spec');
+const { Suite, Testable } = require('zunit');
 const mysql = require('mysql');
 const mysql2 = require('mysql2');
 const complianceTests = require('marv-compliance-tests');
-const driverTests = require('./driver-tests');
+const driverTestSuite = require('./driver.suite');
+
 const setup = require('./setup');
 
-require('hath-assert')(Hath);
-
-module.exports = Hath.suite('All Tests', [
+module.exports = new Suite('All Tests').add([
   buildSuite('MySQL 5 (mysql)', mysql, 3306),
   buildSuite('MySQL 5 (mysql2)', mysql2, 3306),
   buildSuite('MySQL 5 (default)', null, 3306),
   buildSuite('MySQL 8 (mysql)', mysql, 3307),
   buildSuite('MySQL 8 (mysql2)', mysql2, 3308),
   buildSuite('MySQL 8 (default)', null, 3308),
-
 ]);
 
 function buildSuite(name, client, port) {
-  return Hath.suite(name, [
-    setup(client, port),
-    complianceTests,
-    driverTests,
-  ]);
-}
-
-if (module === require.main) {
-  module.exports(new Hath(report));
+  const hook = setup(client, port);
+  return new Suite(name).add(driverTestSuite).add(complianceTests).before(hook);
 }

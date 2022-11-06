@@ -4,28 +4,26 @@
   "description": "A mysql marv driver implementation",
   "main": "index.js",
   "scripts": {
-    "coverage": "nyc --report html --reporter lcov --reporter text-summary node test/suite.js",
+    "coverage": "nyc --report html --reporter lcov --reporter text-summary zUnit",
     "codeclimate": "(test -e .codeclimate && npm run coverage && source .codeclimate && codeclimate-test-reporter < coverage/lcov.info) || echo skipping codeclimate",
     "mysql5": "docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql5 mysql:5",
     "mysql8": "docker run -d -p 3308:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql8 mysql:8",
     "mysql8-native-password": "docker run -d -p 3307:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=1 --name mysql8-native-password mysql:8 --default-authentication-plugin=mysql_native_password",
     "lint": "eslint .",
-    "test": "node test/suite.js"
+    "test": "zUnit"
   },
   "author": "GuideSmiths Ltd",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.26.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "hath": "^1.0.1",
-    "hath-assert": "^0.2.0",
-    "hath-report-spec": "^0.1.0",
     "husky": "^4.2.3",
     "marv": "^6.0.0",
-    "marv-compliance-tests": "^3.0.0",
+    "marv-compliance-tests": "^4.0.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "zunit": "^4.0.2"
   },
   "dependencies": {
     "async": "^3.2.4",

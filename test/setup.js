@@ -1,7 +1,8 @@
+const { Hook } = require('zunit');
 const mysql2 = require('mysql2');
 const driver = require('..');
 
-module.exports = (mysql, port) => function setup(t, done) {
+module.exports = (mysql, port) => new Hook('setup', (hook, done) => {
   const config = {
     table: 'mysql_migrations',
     mysql,
@@ -15,10 +16,10 @@ module.exports = (mysql, port) => function setup(t, done) {
       timezone: '+00:00',
     },
   };
-  t.locals.config = config;
-  t.locals.driver = driver(config);
-  t.locals.driver2 = driver(config);
-  t.locals.migrations = {
+  hook.suite.locals.set('config', config);
+  hook.suite.locals.set('driver1', driver(config));
+  hook.suite.locals.set('driver2', driver(config));
+  hook.suite.locals.set('migrations', {
     simple: {
       level: 1,
       comment: 'test migration',
@@ -74,8 +75,8 @@ module.exports = (mysql, port) => function setup(t, done) {
       timestamp: new Date('2016-12-01T15:14:13.000Z'),
       checksum: '401f1b790bf394cf6493425c1d7e33b0',
     },
-  };
-  t.locals.migration = t.locals.migrations.simple;
+  });
+  hook.suite.locals.set('migration', hook.suite.locals.get('migrations').simple);
   const connection = mysql2.createConnection({ user: 'root', port });
   connection.connect((err) => {
     if (err) throw err;
@@ -84,4 +85,4 @@ module.exports = (mysql, port) => function setup(t, done) {
       connection.end(done);
     });
   });
-};
+});
