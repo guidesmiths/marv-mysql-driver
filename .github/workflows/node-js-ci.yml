@@ -5,34 +5,14 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      mysql5:
-        image: mysql:5
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 1
-      mysql8-native-password:
-        image: mysql:8
-        ports:
-          - 3307:3306
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 1
-        options: --entrypoint "docker-entrypoint.sh --default-authentication-plugin=mysql_native_password"
-      mysql8:
-        image: mysql:8
-        ports:
-          - 3308:3306
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 1
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+      - run: npm run mysql5
+      - run: npm run mysql8
+      - run: npm run mysql8-native-password
       - run: sleep 30
       - run: npm ci
       - run: npm run lint
@@ -41,31 +21,14 @@ jobs:
   code-climate:
     needs: build
     runs-on: ubuntu-latest
-    services:
-      mysql5:
-        image: mysql:5
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 1
-      mysql8-native-password:
-        image: mysql:8
-        ports:
-          - 3307:3306
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 1
-        options: --entrypoint "docker-entrypoint.sh --default-authentication-plugin=mysql_native_password"
-      mysql8:
-        image: mysql:8
-        ports:
-          - 3308:3306
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 1
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: "16.x"
+      - run: npm run mysql5
+      - run: npm run mysql8
+      - run: npm run mysql8-native-password
       - run: sleep 30
       - run: npm ci
       - run: npm run lint
